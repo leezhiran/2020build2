@@ -13,9 +13,6 @@
             android:name=".StarterActivity"
             android:label="@string/title_activity_starter"
             android:theme="@style/AppTheme.NoActionBar">
-            activity
-            android:name=".MainActivity"
-            android:label="This is MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />//设置主活动
                 <category android:name="android.intent.category.LAUNCHER" />//是否显示在应用列表
