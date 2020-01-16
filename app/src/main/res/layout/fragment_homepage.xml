@@ -7,4 +7,31 @@
     tools:context=".HomepageActivityFragment"
     tools:showIn="@layout/activity_homepage">
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="440dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="131dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="440dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="69dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="38dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
