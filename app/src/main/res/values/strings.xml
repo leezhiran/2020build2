@@ -9,4 +9,22 @@
     <string name="title_activity_me">MeActivity</string>
     <string name="title_activity_activities">ActivitiesActivity</string>
     <string name="title_activity_starter">StarterActivity</string>
+    <string name="home_page_title_DYNAMICS">社团动态</string>
+    <string name="home_page_title_SCHEDUELE">今日工作安排</string>
+    <string name="home_page_title_ACTIVITY">已预约活动</string>
+    <string name="input_await_buffer">加载中...</string>
+    <string name="home_page_more">更多</string>
+    <string name="EMPTY_STRING"></string>
+    <string name="title_activity_sign_in">登录</string>
+    <string name="sign_in_password">密码</string>
+    <string name="sign_in_username">用户名</string>
+    <string name="sign_in">登录</string>
+    <string name="sign_up">注册</string>
+    <string name="user_name">用户名</string>
+    <string name="user_password">密码</string>
+    <string name="user_password_dup">再次输入密码</string>
+    <string name="user_e_mail">电子邮箱地址</string>
+    <string name="user_telephone">手机号码</string>
+    <string name="user_nick_name">昵称</string>
+    <string name="title_activity_sign_up">sign_up</string>
 </resources>

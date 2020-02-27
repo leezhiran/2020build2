@@ -14,6 +14,10 @@ import android.view.LayoutInflater;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import butterknife.ButterKnife;
 import butterknife.BindView;
 public class FragmentTabHostActivity extends AppCompatActivity {
@@ -47,6 +51,7 @@ public class FragmentTabHostActivity extends AppCompatActivity {
             TabHost.TabSpec tabSpec=tabHost.newTabSpec(i+" ").setIndicator(getIndicatorView(i));
             tabHost.addTab(tabSpec,myFragmentClasses[i],null);
         }
+        TabChange("");
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
             @Override
             public void onTabChanged(String s){
@@ -61,11 +66,11 @@ public class FragmentTabHostActivity extends AppCompatActivity {
             ImageView ivTab=view.findViewById(R.id.ivTab);
             TextView tvTab=view.findViewById(R.id.tvTab);
             if (i==tabIndex){
-                ivTab.setColorFilter(Color.GREEN);
-                tvTab.setTextColor(Color.GREEN);
+                ivTab.setColorFilter(Color.rgb(56,186,248));
+                tvTab.setTextColor(Color.rgb(56,186,248));
             }else {
-                ivTab.setColorFilter(Color.WHITE);
-                tvTab.setTextColor(Color.WHITE);
+                ivTab.setColorFilter(Color.BLACK);
+                tvTab.setTextColor(Color.BLACK);
             }
         }
     }
@@ -78,9 +83,10 @@ public class FragmentTabHostActivity extends AppCompatActivity {
         ivTab.setImageResource(selectorImg[i]);
         tvTab.setText(tabsTitle[i]);
         if (i==0){
-            ivTab.setColorFilter(Color.GREEN);
-            tvTab.setTextColor(Color.GREEN);
+            ivTab.setColorFilter(Color.rgb(56,186,248));
+            tvTab.setTextColor(Color.rgb(56,186,248));
         }
         return  view;
     }
+
 }
