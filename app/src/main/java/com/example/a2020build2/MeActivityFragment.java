@@ -37,8 +37,9 @@ public class MeActivityFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         System.out.println("OAC");
         Button button = getActivity().findViewById(R.id.sign_up_button);
+        Button button1=getActivity().findViewById(R.id.button2);
         button.setOnClickListener((View v)->{startActivity(new Intent(getActivity(),sign_in.class));});
-
+        button1.setOnClickListener((View v)->{startActivity(new Intent(getActivity(),me_detail.class));});
     }
     public void init_connection_sign_up(){
         final String adr="http://192.168.0.105:8080/serverResponse/sign_up";

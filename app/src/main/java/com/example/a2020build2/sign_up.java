@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 
 import android.text.Editable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -57,6 +58,8 @@ public class sign_up extends AppCompatActivity {
         email_legal_tip.setVisibility(TextView.INVISIBLE);
         username_query_progress.setVisibility(TextView.INVISIBLE);
         email_query_progress.setVisibility(TextView.INVISIBLE);
+        Button sign_up_button=findViewById(R.id.sign_up_action_button);
+        boolean conditions[]=new boolean[4];
 
         user_password.addTextChangedListener(
                 new EditableAdapter (){
@@ -64,15 +67,96 @@ public class sign_up extends AppCompatActivity {
                     public void afterTextChanged(Editable s) {
                         super.afterTextChanged(s);
                         if(!isPasswordLegal(user_password.getText().toString())){
+                            conditions[0]=false;
+                            password_sign.setImageDrawable(getResources().getDrawable(R.drawable.caution));
                             password_legal_tip.setVisibility(TextView.VISIBLE);
                             password_sign.setVisibility(TextView.VISIBLE);
                         }else{
+                            conditions[0]=true;
                             password_legal_tip.setVisibility(TextView.INVISIBLE);
                             password_sign.setImageDrawable(getResources().getDrawable(R.drawable.benefits));
                         }
                     }
                 }
         );
+        user_password_dup.addTextChangedListener(
+                new EditableAdapter(){
+                    @Override
+                    public void afterTextChanged(Editable s){
+                        super.afterTextChanged(s);
+                        if(!user_password.getText().toString().equals(user_password_dup.getText().toString())){
+                            conditions[1]=false;
+                            password_dup_sign.setImageDrawable(getResources().getDrawable(R.drawable.caution));
+                            password_dup_legal_tip.setVisibility(TextView.VISIBLE);
+                            password_dup_sign.setVisibility(TextView.VISIBLE);
+                        }else{
+                            conditions[1]=true;
+                            password_dup_legal_tip.setVisibility(TextView.INVISIBLE);
+                            password_dup_sign.setImageDrawable(getResources().getDrawable(R.drawable.benefits));
+                        }
+                    }
+                }
+        );
+        username.addTextChangedListener(
+                new EditableAdapter(){
+                    @Override
+                    public void afterTextChanged(Editable s){
+                        super.afterTextChanged(s);
+                        if(!InternetInterface.query_if_there_dup_username_or_email(0,username.getText().toString())){
+                            conditions[2]=false;
+                            username_sign.setImageDrawable(getResources().getDrawable(R.drawable.caution));
+                            username_legal_tip.setVisibility(TextView.VISIBLE);
+                            username_sign.setVisibility(ImageView.VISIBLE);
+                        }else{
+                            conditions[2]=true;
+                            username_legal_tip.setVisibility(TextView.INVISIBLE);
+                            username_sign.setImageDrawable(getResources().getDrawable(R.drawable.benefits));
+                            username_sign.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+        );
+        user_email.addTextChangedListener(
+                new EditableAdapter(){
+                    public void afterTextChanged(Editable s){
+                        super.afterTextChanged(s);
+                        if(!InternetInterface.query_if_there_dup_username_or_email(1,user_email.getText().toString())){
+                            conditions[3]=false;
+                            email_sign.setImageDrawable(getResources().getDrawable(R.drawable.caution));
+                            email_legal_tip.setVisibility(TextView.VISIBLE);
+                            email_sign.setVisibility(ImageView.VISIBLE);
+                        }else{
+                            conditions[3]=true;
+                            email_legal_tip.setVisibility(TextView.INVISIBLE);
+                            email_sign.setImageDrawable(getResources().getDrawable(R.drawable.benefits));
+                            username_sign.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+        );
+        sign_up_button.setOnClickListener((v)->{
+            if(conditions[0]&&conditions[1]&&conditions[2]&&conditions[3]){
+                if(InternetInterface.network_init_sign_up(
+                          username.getText().toString(),
+                        user_password.getText().toString(),
+                        user_nickname.getText().toString(),
+                        user_email.getText().toString(),
+                        user_telephone.getText().toString(),
+                        "000"
+                )==false){
+                    Snackbar.make(v, "注册失败", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }else{
+                    Snackbar.make(v, "注册成功", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    try {
+                        wait(1000);
+                    }catch(InterruptedException ie1){
+                        ie1.printStackTrace();
+                    }
+                };
+            }
+        });
     }
     private boolean isPasswordLegal(String password){
         boolean contains[]=new boolean[3];

@@ -3,6 +3,8 @@
     package="com.example.a2020build2">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".BasicData"
@@ -14,9 +16,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".me_detail"
+            android:label="@string/title_activity_me_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".sign_up"
             android:label="@string/title_activity_sign_up"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".sign_in"
             android:label="@string/title_activity_sign_in"

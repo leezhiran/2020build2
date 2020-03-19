@@ -7,17 +7,26 @@ import android.graphics.Bitmap;
 public class BasicData extends Application {
     private Bitmap user_avatar;
     private String info[];
+    private Bitmap photo[];
     private boolean hasLogged;
+    public enum infoIndex{
+        UID,USER_EMAIL,NICKNAME,ADMINISTRATOR_OF,MEMBER_OF,EVENT_PARTICIPATED_IN,REGISTER_TIME,PASSWORD
+    };
+
+    public enum photo{
+        USER_AVATAR
+    }
     private static Context mcontext;
     public void onCreate(){
         super.onCreate();
         mcontext=getApplicationContext();
         this.info=new String [9];
+        this.photo=new Bitmap[1];
     }
-    /*0 UID,1 username,2 user_email,3 nickname,4admini of,5 member of ,6event particin,7reg time,8 pwd*/
     void setInfo(int index,String input){
         this.info[index]=input;
     }
+    void setPhoto(int index,Bitmap input){ this.photo[index]=input;}
     void setHasLogged(boolean staus){
         this.hasLogged=staus;
     }

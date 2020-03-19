@@ -1,22 +1,34 @@
 package com.example.a2020build2;
 
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import java.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+
+
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.nio.ByteBuffer;
 
 public class InternetInterface {
     private static String server_address_root="http://192.168.0.105:8080/serverResponse";
     private static boolean network_result;
+    private static Bitmap o;
     public static  boolean network_init_sign_in(String user_name,String user_password,BasicData application_data){
-
         Runnable r=(()->{try {
             String data="user_name="+user_name
                        +"&user_password="+user_password;
@@ -43,10 +55,8 @@ public class InternetInterface {
             }
             net_in.close();
         }catch(MalformedURLException mue1){
-            network_result=false;
             mue1.printStackTrace();
         }catch(IOException ioe1){
-            network_result=false;
             ioe1.printStackTrace();
         }});
         Thread netThread=new Thread(r);
@@ -54,7 +64,6 @@ public class InternetInterface {
         try {
             netThread.join();
         }catch(InterruptedException ie2){
-            network_result=false;
             ie2.printStackTrace();
         }
         System.out.println("main thread");
@@ -70,21 +79,20 @@ public class InternetInterface {
             try {
                 String data = "user_name=" + username
                         + "&user_password=" + user_password
-                        + "&user_nickname=" + user_nickname
+                        + "&user_nick_name=" + user_nickname
                         + "&user_e_mail=" + user_email
                         + "&telephone_number=" + user_telephone
                         + "&user_university_no=" + user_university_no;
                 BufferedReader net_in=init_reader(sendData(init_connection(server_address_root+"/sign_up"),data));
                 String response=null;
                 response=net_in.readLine();
-                if(response=="OK"){
+                if(response.equals("OK")){
                      network_result=true;
                 }else{
                     network_result=false;
                 }
                 net_in.close();
             }catch(IOException ioe1){
-                network_result=false;
                 ioe1.printStackTrace();
             }
         });
@@ -97,6 +105,28 @@ public class InternetInterface {
         }
         return network_result;
     }
+    public static Bitmap test(String user_name, byte[] input){
+        Runnable r=(()->{
+            try{
+                String data="user_name="+user_name+
+                            "&encoded_data="+Tools.byteToString(input);
+                BufferedReader net_in=init_reader(sendData(init_connection(server_address_root+"/testWorkbench"),data));
+                String res=net_in.readLine();
+                o=Tools.StringToBitmap(res);
+            }catch(IOException ie1){
+                ie1.printStackTrace();
+            }
+        });
+        Thread t=new Thread(r);
+        try {
+            t.join();
+        }catch(InterruptedException ie2){
+            ie2.printStackTrace();
+        }
+        t.start();
+        System.out.println("12344");
+        return o;
+    }
     public static boolean query_if_there_dup_username_or_email(int type,String input){
         Runnable r=(()->{
             try{
@@ -104,14 +134,14 @@ public class InternetInterface {
                            +"&input="+input;
                 BufferedReader net_in=init_reader(sendData(init_connection(server_address_root+"/dup_query_email_and_username"),data));
                 String response=net_in.readLine();
-                if(response=="OK") {
+
+                if(response.equals("OK")) {
                     network_result=true;
                 }else{
                     network_result=false;
                 }
             }catch(IOException io2){
                 io2.printStackTrace();
-                network_result=false;
             }
         });
         Thread netThread=new Thread(r);
@@ -121,6 +151,7 @@ public class InternetInterface {
         }catch(InterruptedException ie1){
             ie1.printStackTrace();
         }
+        System.out.println(network_result);
         return network_result;
     }
     private static HttpURLConnection init_connection(String URL_in)throws IOException{
@@ -134,14 +165,15 @@ public class InternetInterface {
         connection.connect();
         return connection;
     }
-    public static HttpURLConnection sendData(HttpURLConnection connection,String Data) throws IOException{
+    private static HttpURLConnection sendData(HttpURLConnection connection,String Data) throws IOException{
         OutputStream net_out = connection.getOutputStream();
         net_out.write(Data.getBytes());
         net_out.flush();
         net_out.close();
         return connection;
     }
-    public static BufferedReader init_reader(HttpURLConnection connection)throws IOException{
+
+    private static BufferedReader init_reader(HttpURLConnection connection)throws IOException{
         BufferedReader net_in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         return net_in;
     }
